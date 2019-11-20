@@ -41,7 +41,12 @@ class Fighter {
 
   //this logs who attacked who
   attack(target) {
-    console.log(this.name + ' Tatsumaki Senpukyaku ' + target.name);
+  var name = prompt("random damage")
+  var objective = alert ("ok" + target.name + "you will attack once");
+  var hit = Math.floor(Math.random()*100)+1
+  var crit = Math.floor(Math.random(100)*200)+1
+  var attack = Math.random(hit || crit)
+  var damage = 0;
   }
 
   single(target) {
