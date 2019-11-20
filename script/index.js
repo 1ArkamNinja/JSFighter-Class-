@@ -41,7 +41,7 @@ class Fighter {
 
   //this logs who attacked who
   attack(target) {
-    console.log(this.name + ' attacked ' + target.name);
+    console.log(this.name + ' Tatsumaki Senpukyaku ' + target.name);
   }
 
   single(target) {
