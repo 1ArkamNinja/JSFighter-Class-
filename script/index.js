@@ -24,6 +24,7 @@ let graphicsBox;
 let barsBox;
 let controlsBox;
 let outputBox;
+let oldtext;
 class Fighter {
   constructor(name, charaName) {
     //'contructor' is in all JS classes
@@ -39,14 +40,25 @@ class Fighter {
   }
   //this logs who attacked who
   attack(target) {
-    console.log(this.name + ' attacked ' + target.name); //logs attack
-      let damage = (Math.round(Math.random() + 1) * this.atk) //Does the attack with a random chance to be double. this is done by getting random number between one and zero, converts it to just one or zero and adds one to it making it randomly one or two. then it takes the one or two times the damage to deal random double damage
-      outputBox.innerHTML += '<br>' + this.name + ' attacked ' + target.name + ' for ' + damage +  ' damage!' // outputs to the outputbox
-      koCheck(target, damage); //runs ko check
+    console.log(this.name + ' attacked ' + target.name);
+    let amount = 0
+    amount = Math.floor(Math.random() * 6)
+    console.log(this.name + " damage dealt " + amount + ' damage to ' + target.name);
+    outputBox.innerHTML = target.name + " has " + target.hp + " Hp left"
+    koCheck(target, amount)
+    // outputBox.innerHTML = player0.name + " has done " + amount + " damage"
   }
+//this is the single attack function
   single(target) {
+    oldtext = '<br>' + outputBox.innerHTML
     this.attack(target);
+    // outputBox.innerHTML = '<br>' + this.name + " Dealt " + amount + ' damage to ' + target.name + outputBox.innerHTML;
+    if (logging) {
+      outputBox.innerHTML += oldtext;
+    }
+    endTurn();
   }
+//this is the double attack function
   double(target) {
     this.attack(target);
     this.attack(target);
@@ -89,15 +101,21 @@ function koCheck(target, amount) {
   target.hp = target.hp - amount;
   console.log(target.hp);
   if (target.hp <= 0) {
-    console.log(target.name + " sadly passed away")
-    console.log("Press" + " 'F' " + "To pay respects");
+    hideControls()
+    console.log(target.name + " Is dead");
+    outputBox.innerHTML = target.name + " is dead"
     return true;
   } else {
+    playerTurn = true
     return false;
   }
 }
-function updateBars() {
+function updateBars(player, type, min, max) {
   //calculates the percent of HP
+  // (min/max) * percent = 100
+  // if (min <= 0){
+  //   percent = 0;
+  // }
   player0PercentHP = (Player0.hp / START_HP) * 100
   player1PercentHP = (Player1.hp / START_HP) * 100
   player0PercentHP = (Player0.sp / START_SP) * 100
@@ -143,35 +161,14 @@ function updateBars() {
 // EndTurn code
 function endTurn() {
   playerTurn = !playerTurn
-  if (kocheck(Player0, 0) || kocheck(Player1, 0)){
+  if (kocheck(Player0, 0) || kocheck(Player1, 0)) {
     hideControls();
-  }
-  //Makes sure Player0's SP is not greater than 100% or less than 0%
-  if (player0PercentSP <= 0) {
-    player0PercentSP = 0
-  } else if (player0PercentSP > 100) {
-    player0PercentSP = 100
   } else {
-    player0PercentSP = player0PercentSP
+    showControls()
   }
-  //Makes sure Player1's SP is not greater than 100% or less than 0%
-  if (player1PercentSP <= 0) {
-    player1PercentSP = 0
-  } else if (player1PercentSP > 100) {
-    player1PercentSP = 100
-  } else {
-    player1PercentSP = player1PercentSP
-  }
-  barsBox.innerHTML = ''
-  barsBox.innerHTML += 'P0<div class="hpBar"><div style="height:' + player0PercentHP + '%; width: 100%;" id="p0HPfill" class="HPfill"></div></div>'
-  barsBox.innerHTML += '<div class="spBar"><div style="height:' + player0PercentSP + '%; width: 100%;" id="p0SPfill" class="SPfill"></div></div>'
-  barsBox.innerHTML += 'P1<div class="hpBar"><div style="height:' + player1PercentHP + '%; width: 100%;" id="p1HPfill" class="HPfill"></div></div>'
-  barsBox.innerHTML += '<div class="spBar"><div style="height:' + player1PercentSP + '%; width: 100%;" id="p1SPfill" class="SPfill"></div></div>'
 }
-function hideContols() {
-  controlsBox.innerHTML = "";
-}
-function hideContols() {
+// this hides the controlsBox
+function hideControls() {
   controlsBox.innerHTML = "";
 }
 /*
