@@ -61,7 +61,6 @@ class Fighter {
       outputBox.innerHTML = this.name + ' attacked ' + target.name + ' for ' + damage + ' damage!' + '<br><br>'; // outputs to the outputbox
       outputBox.innerHTML += oldText;
       outputBox.innerHTML += target.name + ' has ' + target.hp + ' health remaining' + '<br><br>';
-      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png';
       document.getElementById(target.charaName).src = 'img/' + target.charaName + '_hit.png';
       koCheck(target, damage); //runs ko check
     }
@@ -215,4 +214,4 @@ function hideControls() {
 /*
 MHW = 'delicious'
 MHWoutput > MHWinput
-*/
+*/*/
